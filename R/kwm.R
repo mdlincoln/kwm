@@ -13,14 +13,14 @@ first_match <- function(x, p) {
 #' @export
 #'
 #' @return A moel object of class `kwm_model`
-kwm <- function(include_list, exclude_list = character(), varname) {
-  assertthat::assert_that(is.character(include_list), msg = "include_list must be a character vector")
-  assertthat::assert_that(is.character(exclude_list), msg = "exclude_list must be a character vector")
+kwm <- function(include, exclude = character(), varname) {
+  assertthat::assert_that(is.character(include), msg = "include must be a character vector")
+  assertthat::assert_that(is.character(exclude), msg = "exclude must be a character vector")
   assertthat::assert_that(assertthat::is.string(varname), msg = "varname must be a character vector of length one")
 
   l <- list(
-    include_list = include_list,
-    exclude_list = exclude_list,
+    include = include,
+    exclude = exclude,
     varname = varname
   )
   class(l) <- "kwm"
@@ -50,6 +50,6 @@ predict.kwm <- function(object, newdata, progress = interactive()) {
 
   vapply(x, function(y) {
     if (progress_allowed) pb$tick()
-    first_match(y, object$include_list) & !first_match(y, object$exclude_list)
+    first_match(y, object$include) & !first_match(y, object$exclude)
   }, FUN.VALUE = logical(1))
 }
