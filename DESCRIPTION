@@ -12,4 +12,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Imports: assertthat,
     stringr
-Suggests: testthat
+Suggests: testthat,
+    progress
