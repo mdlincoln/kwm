@@ -11,7 +11,7 @@ first_match <- function(x, p, opts) {
 }
 
 allowed_grepl_opts <- names(formals(grepl))[-(1:2)]
-print_grepl_opts <- glue::collapse(allowed_grepl_opts, sep = ", ")
+print_grepl_opts <- paste0(allowed_grepl_opts, collapse = ", ")
 
 #' Produce a model object based on regular expressions.
 #'
