@@ -11,7 +11,7 @@ Description: Produce `KeyWord Models` that produce classification predictions
 License: GPL-3 + file LICENSE
 Imports:
     assertthat,
-    stringr
+    glue
 Suggests:
     progress,
     testthat

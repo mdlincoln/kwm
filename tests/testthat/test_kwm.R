@@ -20,9 +20,13 @@ test_that("Invalid prediction outputs are rejected", {
 context("Test predict.kwm outputs")
 test_that("Matches inclusions correctly", {
   kwm_model <- kwm(include = c("a", "y"), exclude = "r", varname = "month")
+  caseless_kwm_model <- kwm(include = c("a", "y"), exclude = "r", varname = "month", grepl_opts = list(ignore.case = TRUE))
   kwm_predictions <- predict(kwm_model, newdata = d)
+  caseless_kwm_predictions <- predict(caseless_kwm_model, newdata = d)
   named_kwm_predictions <- predict(kwm_model, newdata = d, return_names = TRUE)
-  expect_equivalent(predict(kwm_model, newdata = d), c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE))
+
+  expect_equivalent(kwm_predictions, c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE))
+  expect_equivalent(caseless_kwm_predictions, c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE))
   expect_named(kwm_predictions, expected = NULL)
   expect_named(named_kwm_predictions)
 })

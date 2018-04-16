@@ -5,7 +5,7 @@
 \alias{predict.kwm}
 \title{Produce a model object based on regular expressions}
 \usage{
-kwm(include, exclude = character(), varname)
+kwm(include, exclude = character(), varname, grepl_opts = NULL)
 
 \method{predict}{kwm}(object, newdata, progress = interactive(),
   return_names = FALSE)
@@ -16,6 +16,8 @@ kwm(include, exclude = character(), varname)
 \item{exclude}{Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with \code{include}}
 
 \item{varname}{Character. A character vector of length one with the column name to be tested.}
+
+\item{grepl_opts}{Named list of arguments to pass to \link{grepl}.}
 
 \item{object}{A \code{kwm} model object}
 

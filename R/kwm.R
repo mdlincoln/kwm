@@ -1,27 +1,39 @@
 # Loops over a vector of patterns, returning TRUE once the first match is made.
 # If no matches are found, returns FALSE
-first_match <- function(x, p) {
-  any(stringr::str_detect(x, stringr::regex(p, ignore_case = TRUE)))
+first_match <- function(x, p, opts) {
+  for (i in seq_along(p)) {
+    res <- do.call(grepl, args = c(list(pattern = p[i], x = x), opts))
+    if (res) {
+      return(TRUE)
+    }
+  }
+  return(FALSE)
 }
+
+allowed_grepl_opts <- names(formals(grepl))[-(1:2)]
+print_grepl_opts <- glue::collapse(allowed_grepl_opts, sep = ", ")
 
 #' Produce a model object based on regular expressions
 #'
 #' @param include Character. List of regular expression patterns, any one of which will return a positive match.
 #' @param exclude Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with `include`
 #' @param varname Character. A character vector of length one with the column name to be tested.
+#' @param grepl_opts Named list of arguments to pass to \link{grepl}.
 #'
 #' @export
 #'
 #' @return `kwm` returns a model object of class `kwm_model`
-kwm <- function(include, exclude = character(), varname) {
+kwm <- function(include, exclude = character(), varname, grepl_opts = NULL) {
   assertthat::assert_that(is.character(include), msg = "include must be a character vector")
   assertthat::assert_that(is.character(exclude), msg = "exclude must be a character vector")
   assertthat::assert_that(assertthat::is.string(varname), msg = "varname must be a character vector of length one")
+  assertthat::assert_that(all(names(grepl_opts) %in% allowed_grepl_opts), msg = glue::glue("Allowed options for grepl include {print_grepl_opts}"))
 
   l <- list(
     include = include,
     exclude = exclude,
-    varname = varname
+    varname = varname,
+    grepl_opts = grepl_opts
   )
   class(l) <- "kwm"
   l
@@ -44,11 +56,11 @@ predict.kwm <- function(object, newdata, progress = interactive(), return_names 
 
   assertthat::assert_that(
     assertthat::has_name(newdata, object$varname),
-    msg = stringr::str_glue("{newdata_name} does not have a column named '{object$varname}'."))
+    msg = glue::glue("{newdata_name} does not have a column named '{object$varname}'."))
 
   assertthat::assert_that(
     is.character(newdata[[object$varname]]),
-    msg = stringr::str_glue("'{object$varname}' in {newdata_name} is not character."))
+    msg = glue::glue("'{object$varname}' in {newdata_name} is not character."))
 
   progress_allowed <- progress & requireNamespace("progress", quietly = TRUE)
 
@@ -60,7 +72,7 @@ predict.kwm <- function(object, newdata, progress = interactive(), return_names 
 
   vapply(x, function(y) {
     if (progress_allowed) pb$tick()
-    first_match(y, object$include) & !first_match(y, object$exclude)
+    first_match(y, object$include, opts = object$grepl_opts) & !first_match(y, object$exclude, opts = object$grepl_opts)
   }, FUN.VALUE = logical(1),
   USE.NAMES = return_names)
 }
