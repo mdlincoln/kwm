@@ -1,16 +1,22 @@
 Package: kwm
+Title: Explicit Regex Matching Implemented As Model-like Objects
 Version: 0.0.0.9000
-Title: What the Package Does (One Line, Title Case)
-Description: What the package does (one paragraph).
 Authors@R: person("Matthew Lincoln", email = "matthew.d.lincoln@gmail.com", 
     role = c("aut", "cre"))
+Description: Produce `KeyWord Models` that produce classification predictions 
+    based on explicit lists of pattern matches. By supplying a generic 
+    prediction function for such lists, it is easy to compare the performance 
+    of very simple regex matching to other classification models within the 
+    same pipeline.
 License: GPL-3 + file LICENSE
+Imports: 
+    assertthat,
+    stringr
+Suggests: 
+    progress,
+    testthat
+ByteCompile: true
 Encoding: UTF-8
 LazyData: true
-ByteCompile: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
-Imports: assertthat,
-    stringr
-Suggests: testthat,
-    progress
