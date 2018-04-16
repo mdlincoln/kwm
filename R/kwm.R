@@ -51,5 +51,6 @@ predict.kwm <- function(object, newdata, progress = interactive()) {
   vapply(x, function(y) {
     if (progress_allowed) pb$tick()
     first_match(y, object$include) & !first_match(y, object$exclude)
-  }, FUN.VALUE = logical(1))
+  }, FUN.VALUE = logical(1),
+  USE.NAMES = FALSE)
 }
