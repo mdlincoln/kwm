@@ -3,6 +3,12 @@
 
 # kwm
 
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis-CI Build
+Status](https://travis-ci.org/mdlincoln/kwm.svg?branch=master)](https://travis-ci.org/mdlincoln/kwm)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/mdlincoln/kwm?branch=master&svg=true)](https://ci.appveyor.com/project/mdlincoln/kwm)
+
 kwm provides very simiple wrapper functions to produce **K**ey**W**ord
 **M**odels that produce classification predictions based on explicit
 lists of regular expression pattern matches. By supplying a generic
