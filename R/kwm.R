@@ -52,7 +52,7 @@ kwm <- function(include = character(), exclude = character(), varname, grepl_opt
 #' @export
 predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE, ...) {
 
-  newdata_name <- deparse(substitute(newdata, env = .GlobalEnv))
+  newdata_name <- deparse(substitute(newdata))
 
   assertthat::assert_that(
     assertthat::has_name(newdata, object$varname),
