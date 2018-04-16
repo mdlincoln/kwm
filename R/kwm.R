@@ -46,6 +46,7 @@ kwm <- function(include = character(), exclude = character(), varname, grepl_opt
 #' @param progress Logical. Display a progress bar?
 #' @param return_names Logical. Add original text as names to the resulting
 #'   logical vector?
+#' @param ... Other arguments passed from functions. Not used currently.
 #'
 #' @return `predict.kwm` reutrns a logical vector.
 #'

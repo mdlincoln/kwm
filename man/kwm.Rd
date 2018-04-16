@@ -28,6 +28,8 @@ kwm(include = character(), exclude = character(), varname,
 
 \item{return_names}{Logical. Add original text as names to the resulting
 logical vector?}
+
+\item{...}{Other arguments passed from functions. Not used currently.}
 }
 \value{
 \code{kwm} returns a model object of class \code{kwm}
