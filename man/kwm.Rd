@@ -2,19 +2,30 @@
 % Please edit documentation in R/kwm.R
 \name{kwm}
 \alias{kwm}
+\alias{predict.kwm}
 \title{Produce a model object based on regular expressions}
 \usage{
-kwm(include_list, exclude_list = character(), varname)
+kwm(include, exclude = character(), varname)
+
+\method{predict}{kwm}(object, newdata, progress = interactive())
 }
 \arguments{
-\item{varname}{Character. A character vector of length one with the column name to be tested.}
-
 \item{include}{Character. List of regular expression patterns, any one of which will return a positive match.}
 
 \item{exclude}{Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with \code{include}}
+
+\item{varname}{Character. A character vector of length one with the column name to be tested.}
+
+\item{object}{A \code{kwm} model object}
+
+\item{newdata}{A data.frame containing a text column}
+
+\item{progress}{Logical. Display a progress bar?}
 }
 \value{
-A moel object of class \code{kwm_model}
+\code{kwm} returns a model object of class \code{kwm_model}
+
+\code{predict.kwm} reutrns a logical vector.
 }
 \description{
 Produce a model object based on regular expressions

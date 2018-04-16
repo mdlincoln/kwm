@@ -12,7 +12,7 @@ first_match <- function(x, p) {
 #'
 #' @export
 #'
-#' @return A moel object of class `kwm_model`
+#' @return `kwm` returns a model object of class `kwm_model`
 kwm <- function(include, exclude = character(), varname) {
   assertthat::assert_that(is.character(include), msg = "include must be a character vector")
   assertthat::assert_that(is.character(exclude), msg = "exclude must be a character vector")
@@ -27,6 +27,14 @@ kwm <- function(include, exclude = character(), varname) {
   l
 }
 
+#' @rdname kwm
+#'
+#' @param object A `kwm` model object
+#' @param newdata A data.frame containing a text column
+#' @param progress Logical. Display a progress bar?
+#'
+#' @return `predict.kwm` reutrns a logical vector.
+#'
 #' @export
 predict.kwm <- function(object, newdata, progress = interactive()) {
 
