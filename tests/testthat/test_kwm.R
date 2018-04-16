@@ -5,8 +5,8 @@ context("Test kwm inputs")
 test_that("Invalid inputs are rejected", {
   expect_error(kwm(include = integer(1)))
   expect_error(kwm(exclude = integer(1)))
-  expect_error(kwm(varname = c("a", "b")))
-  expect_error(kwm(varname = integer(1)))
+  expect_error(kwm(include = "a", varname = c("a", "b")))
+  expect_error(kwm(include = "a", varname = integer(1)))
 })
 
 context("Test predict.kwm inputs")

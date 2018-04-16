@@ -13,21 +13,21 @@ first_match <- function(x, p, opts) {
 allowed_grepl_opts <- names(formals(grepl))[-(1:2)]
 print_grepl_opts <- glue::collapse(allowed_grepl_opts, sep = ", ")
 
-#' Produce a model object based on regular expressions
+#' Produce a model object based on regular expressions.
 #'
 #' @param include Character. List of regular expression patterns, any one of which will return a positive match.
 #' @param exclude Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with `include`
 #' @param varname Character. A character vector of length one with the column name to be tested.
-#' @param grepl_opts Named list of arguments to pass to \link{grepl}.
+#' @param grepl_opts Named list of arguments to pass to [base::grepl].
 #'
 #' @export
 #'
-#' @return `kwm` returns a model object of class `kwm_model`
-kwm <- function(include, exclude = character(), varname, grepl_opts = NULL) {
+#' @return `kwm` returns a model object of class `kwm`
+kwm <- function(include = character(), exclude = character(), varname, grepl_opts = NULL) {
   assertthat::assert_that(is.character(include), msg = "include must be a character vector")
   assertthat::assert_that(is.character(exclude), msg = "exclude must be a character vector")
   assertthat::assert_that(assertthat::is.string(varname), msg = "varname must be a character vector of length one")
-  assertthat::assert_that(all(names(grepl_opts) %in% allowed_grepl_opts), msg = glue::glue("Allowed options for grepl include {print_grepl_opts}"))
+  assertthat::assert_that(all(names(grepl_opts) %in% allowed_grepl_opts), msg = sprintf("Allowed options for grepl include %s", print_grepl_opts))
 
   l <- list(
     include = include,
@@ -50,17 +50,17 @@ kwm <- function(include, exclude = character(), varname, grepl_opts = NULL) {
 #' @return `predict.kwm` reutrns a logical vector.
 #'
 #' @export
-predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE) {
+predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE, ...) {
 
   newdata_name <- deparse(substitute(newdata, env = .GlobalEnv))
 
   assertthat::assert_that(
     assertthat::has_name(newdata, object$varname),
-    msg = glue::glue("{newdata_name} does not have a column named '{object$varname}'."))
+    msg = sprintf("%s does not have a column named '%s'.", newdata_name, object$varname))
 
   assertthat::assert_that(
     is.character(newdata[[object$varname]]),
-    msg = glue::glue("'{object$varname}' in {newdata_name} is not character."))
+    msg = sprintf("'%s' in %s is not character.", object$varname, newdata_name))
 
   progress_allowed <- progress & requireNamespace("progress", quietly = TRUE)
 

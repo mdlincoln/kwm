@@ -3,12 +3,13 @@
 \name{kwm}
 \alias{kwm}
 \alias{predict.kwm}
-\title{Produce a model object based on regular expressions}
+\title{Produce a model object based on regular expressions.}
 \usage{
-kwm(include, exclude = character(), varname, grepl_opts = NULL)
+kwm(include = character(), exclude = character(), varname,
+  grepl_opts = NULL)
 
 \method{predict}{kwm}(object, newdata, progress = interactive(),
-  return_names = FALSE)
+  return_names = FALSE, ...)
 }
 \arguments{
 \item{include}{Character. List of regular expression patterns, any one of which will return a positive match.}
@@ -17,7 +18,7 @@ kwm(include, exclude = character(), varname, grepl_opts = NULL)
 
 \item{varname}{Character. A character vector of length one with the column name to be tested.}
 
-\item{grepl_opts}{Named list of arguments to pass to \link{grepl}.}
+\item{grepl_opts}{Named list of arguments to pass to \link[base:grepl]{base::grepl}.}
 
 \item{object}{A \code{kwm} model object}
 
@@ -29,10 +30,10 @@ kwm(include, exclude = character(), varname, grepl_opts = NULL)
 logical vector?}
 }
 \value{
-\code{kwm} returns a model object of class \code{kwm_model}
+\code{kwm} returns a model object of class \code{kwm}
 
 \code{predict.kwm} reutrns a logical vector.
 }
 \description{
-Produce a model object based on regular expressions
+Produce a model object based on regular expressions.
 }
