@@ -7,7 +7,8 @@
 \usage{
 kwm(include, exclude = character(), varname)
 
-\method{predict}{kwm}(object, newdata, progress = interactive())
+\method{predict}{kwm}(object, newdata, progress = interactive(),
+  return_names = FALSE)
 }
 \arguments{
 \item{include}{Character. List of regular expression patterns, any one of which will return a positive match.}
@@ -21,6 +22,9 @@ kwm(include, exclude = character(), varname)
 \item{newdata}{A data.frame containing a text column}
 
 \item{progress}{Logical. Display a progress bar?}
+
+\item{return_names}{Logical. Add original text as names to the resulting
+logical vector?}
 }
 \value{
 \code{kwm} returns a model object of class \code{kwm_model}

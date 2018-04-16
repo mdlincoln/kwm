@@ -32,11 +32,13 @@ kwm <- function(include, exclude = character(), varname) {
 #' @param object A `kwm` model object
 #' @param newdata A data.frame containing a text column
 #' @param progress Logical. Display a progress bar?
+#' @param return_names Logical. Add original text as names to the resulting
+#'   logical vector?
 #'
 #' @return `predict.kwm` reutrns a logical vector.
 #'
 #' @export
-predict.kwm <- function(object, newdata, progress = interactive()) {
+predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE) {
 
   newdata_name <- deparse(substitute(newdata, env = .GlobalEnv))
 
@@ -60,5 +62,5 @@ predict.kwm <- function(object, newdata, progress = interactive()) {
     if (progress_allowed) pb$tick()
     first_match(y, object$include) & !first_match(y, object$exclude)
   }, FUN.VALUE = logical(1),
-  USE.NAMES = FALSE)
+  USE.NAMES = return_names)
 }

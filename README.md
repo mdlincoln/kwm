@@ -29,7 +29,7 @@ month_df <- data.frame(month = month.name, stringsAsFactors = FALSE)
 # Locate all matches that INCLUDE either "a" or "e" but EXCLUDE any ending in "r"
 month_model <- kwm(include = c("a", "e"), exclude = "r$", varname = "month")
 
-predict(month_model, newdata = month_df)
+predict(month_model, newdata = month_df, return_names = TRUE)
 #>   January  February     March     April       May      June      July 
 #>      TRUE      TRUE      TRUE      TRUE      TRUE      TRUE     FALSE 
 #>    August September   October  November  December 
