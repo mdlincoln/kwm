@@ -1,13 +1,8 @@
 # Loops over a vector of patterns, returning TRUE once the first match is made.
 # If no matches are found, returns FALSE
-first_match <- function(x, p, opts) {
-  for (i in seq_along(p)) {
-    res <- do.call(grepl, args = c(list(pattern = p[i], x = x), opts))
-    if (res) {
-      return(TRUE)
-    }
-  }
-  return(FALSE)
+first_match <- function(x, p, search_fun, search_opts) {
+  patternfun <- do.call(search_fun, args = c(list(pattern = p), search_opts))
+  any(stringr::str_detect(string = x, pattern = patternfun))
 }
 
 allowed_grepl_opts <- names(formals(grepl))[-(1:2)]
@@ -18,22 +13,23 @@ print_grepl_opts <- paste0(allowed_grepl_opts, collapse = ", ")
 #' @param include Character. List of regular expression patterns, any one of which will return a positive match.
 #' @param exclude Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with `include`
 #' @param varname Character. A character vector of length one with the column name to be tested.
-#' @param grepl_opts Named list of arguments to pass to [base::grepl].
+#' @param search_fun One of the [stringr::modifiers] functions from [pkg:stringr]. Defaults to [stringr::regex].
+#' @param search_opts List of arguments to pass to `search_fun`.
 #'
 #' @export
 #'
 #' @return `kwm` returns a model object of class `kwm`
-kwm <- function(include = character(), exclude = character(), varname, grepl_opts = NULL) {
+kwm <- function(include = character(), exclude = character(), varname, search_fun = stringr::regex, search_opts = NULL) {
   assertthat::assert_that(is.character(include), msg = "include must be a character vector")
   assertthat::assert_that(is.character(exclude), msg = "exclude must be a character vector")
   assertthat::assert_that(assertthat::is.string(varname), msg = "varname must be a character vector of length one")
-  assertthat::assert_that(all(names(grepl_opts) %in% allowed_grepl_opts), msg = sprintf("Allowed options for grepl include %s", print_grepl_opts))
 
   l <- list(
     include = include,
     exclude = exclude,
     varname = varname,
-    grepl_opts = grepl_opts
+    search_fun = search_fun,
+    search_opts = search_opts
   )
   class(l) <- "kwm"
   l
@@ -73,7 +69,7 @@ predict.kwm <- function(object, newdata, progress = interactive(), return_names 
 
   vapply(x, function(y) {
     if (progress_allowed) pb$tick()
-    first_match(y, object$include, opts = object$grepl_opts) & !first_match(y, object$exclude, opts = object$grepl_opts)
+    first_match(y, object$include, object$search_fun, object$search_opts) & !first_match(y, object$exclude, object$search_fun, object$search_opts)
   }, FUN.VALUE = logical(1),
   USE.NAMES = return_names)
 }

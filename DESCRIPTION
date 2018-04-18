@@ -11,9 +11,10 @@ Description: Produce `KeyWord Models` that produce classification predictions
 License: GPL-3 + file LICENSE
 URL: https://github.com/mdlincoln/kwm
 BugReports: https://github.com/mdlincoln/kwm/issues
-Imports: 
-    assertthat
-Suggests: 
+Imports:
+    assertthat,
+    stringr
+Suggests:
     progress,
     testthat
 ByteCompile: true

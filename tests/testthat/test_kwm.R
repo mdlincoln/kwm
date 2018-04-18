@@ -7,7 +7,6 @@ test_that("Invalid inputs are rejected", {
   expect_error(kwm(exclude = integer(1)), regexp = "exclude")
   expect_error(kwm(include = "a", varname = c("a", "b")), regexp = "varname")
   expect_error(kwm(include = "a", varname = integer(1)), regexp = "varname")
-  expect_error(kwm(include = "a", varname = "foo", grepl_opts = list(baz = "bar")), regexp = "Allowed options for grepl include")
 })
 
 context("Test predict.kwm inputs")
@@ -21,7 +20,7 @@ test_that("Invalid prediction outputs are rejected", {
 context("Test predict.kwm outputs")
 test_that("Matches inclusions correctly", {
   kwm_model <- kwm(include = c("a", "y"), exclude = "r", varname = "month")
-  caseless_kwm_model <- kwm(include = c("a", "y"), exclude = "r", varname = "month", grepl_opts = list(ignore.case = TRUE))
+  caseless_kwm_model <- kwm(include = c("a", "y"), exclude = "r", varname = "month", search_opts = list(ignore_case = TRUE))
   kwm_predictions <- predict(kwm_model, newdata = d)
   caseless_kwm_predictions <- predict(caseless_kwm_model, newdata = d)
   named_kwm_predictions <- predict(kwm_model, newdata = d, return_names = TRUE)

@@ -6,7 +6,7 @@
 \title{Produce a model object based on regular expressions.}
 \usage{
 kwm(include = character(), exclude = character(), varname,
-  grepl_opts = NULL)
+  search_fun = stringr::regex, search_opts = NULL)
 
 \method{predict}{kwm}(object, newdata, progress = interactive(),
   return_names = FALSE, ...)
@@ -18,7 +18,9 @@ kwm(include = character(), exclude = character(), varname,
 
 \item{varname}{Character. A character vector of length one with the column name to be tested.}
 
-\item{grepl_opts}{Named list of arguments to pass to \link[base:grepl]{base::grepl}.}
+\item{search_fun}{One of the \link[stringr:modifiers]{stringr::modifiers} functions from \link{pkg:stringr}. Defaults to \link[stringr:regex]{stringr::regex}.}
+
+\item{search_opts}{List of arguments to pass to \code{search_fun}.}
 
 \item{object}{A \code{kwm} model object}
 
