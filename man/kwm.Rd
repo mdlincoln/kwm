@@ -18,7 +18,7 @@ kwm(include = character(), exclude = character(), varname,
 
 \item{varname}{Character. A character vector of length one with the column name to be tested.}
 
-\item{search_fun}{One of the \link[stringr:modifiers]{stringr::modifiers} functions from \link{pkg:stringr}. Defaults to \link[stringr:regex]{stringr::regex}.}
+\item{search_fun}{One of the \link[stringr:modifiers]{stringr::modifiers} functions from \link[stringr:stringr]{stringr::stringr}. Defaults to \link[stringr:regex]{stringr::regex}.}
 
 \item{search_opts}{List of arguments to pass to \code{search_fun}.}
 

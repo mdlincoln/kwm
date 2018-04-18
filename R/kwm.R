@@ -13,7 +13,7 @@ print_grepl_opts <- paste0(allowed_grepl_opts, collapse = ", ")
 #' @param include Character. List of regular expression patterns, any one of which will return a positive match.
 #' @param exclude Character. List of regular expression patterns, any one of which will return a negative match, overriding any other matches with `include`
 #' @param varname Character. A character vector of length one with the column name to be tested.
-#' @param search_fun One of the [stringr::modifiers] functions from [pkg:stringr]. Defaults to [stringr::regex].
+#' @param search_fun One of the [stringr::modifiers] functions from [stringr::stringr]. Defaults to [stringr::regex].
 #' @param search_opts List of arguments to pass to `search_fun`.
 #'
 #' @export
