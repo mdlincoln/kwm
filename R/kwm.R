@@ -47,7 +47,7 @@ kwm <- function(include = character(), exclude = character(), varname, search_fu
 #' @return `predict.kwm` reutrns a logical vector.
 #'
 #' @export
-predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE, ...) {
+predict.kwm <- function(object, newdata, progress = interactive(), return_names = FALSE, parallel = TRUE, ...) {
 
   newdata_name <- deparse(substitute(newdata))
 
@@ -63,13 +63,42 @@ predict.kwm <- function(object, newdata, progress = interactive(), return_names 
 
   x <- newdata[[object$varname]]
 
-  if (progress_allowed) pb <- progress::progress_bar$new(
-    format = " Predicting [:bar] :percent eta: :eta",
-    total = length(x), clear = FALSE, width = 60)
+  if (progress_allowed) {
+    pb <- progress::progress_bar$new(
+      format = " Predicting [:bar] :percent eta: :eta",
+      total = length(x), clear = FALSE, width = 60)
+  }
 
+  if (parallel) {
+    if (requireNamespace("doParallel", quietly = TRUE) && requireNamespace("foreach", quietly = TRUE)) {
+      return(parallel_handler(x, object, progress_allowed, pb, return_names))
+    } else {
+      message("Parallel processing requires 'doParallel' and 'foreach'. Defaulting to single-threaded execution.")
+    }
+  }
+  single_handler(x, object, progress_allowed, pb, return_names)
+}
+
+single_handler <- function(x, object, progress_allowed, pb = NULL, return_names) {
   vapply(x, function(y) {
     if (progress_allowed) pb$tick()
-    first_match(y, object$include, object$search_fun, object$search_opts) & !first_match(y, object$exclude, object$search_fun, object$search_opts)
+    predict_handler(y, object)
   }, FUN.VALUE = logical(1),
   USE.NAMES = return_names)
+}
+
+#' @import foreach doParallel
+parallel_handler <- function(x, object, progress_allowed, pb = NULL, return_names) {
+  registerDoParallel(cores = detectCores())
+  res <- foreach(i = seq_along(x), .inorder = TRUE, .combine = c, .multicombine = TRUE, .export = c("pb", "progress_allowed")) %dopar% {
+    if (progress_allowed) pb$tick()
+    predict_handler(y = x[i], object)
+  }
+  if (return_names)
+    names(res) <- x
+  res
+}
+
+predict_handler <- function(y, object) {
+  first_match(y, object$include, object$search_fun, object$search_opts) & !first_match(y, object$exclude, object$search_fun, object$search_opts)
 }

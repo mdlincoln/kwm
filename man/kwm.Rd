@@ -9,7 +9,7 @@ kwm(include = character(), exclude = character(), varname,
   search_fun = stringr::regex, search_opts = NULL)
 
 \method{predict}{kwm}(object, newdata, progress = interactive(),
-  return_names = FALSE, ...)
+  return_names = FALSE, parallel = TRUE, ...)
 }
 \arguments{
 \item{include}{Character. List of regular expression patterns, any one of which will return a positive match.}

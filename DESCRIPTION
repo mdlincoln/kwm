@@ -16,7 +16,8 @@ Imports:
     stringr
 Suggests:
     progress,
-    testthat
+    testthat,
+    doParallel
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
