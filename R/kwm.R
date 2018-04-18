@@ -87,11 +87,9 @@ single_handler <- function(x, object, progress_allowed, pb = NULL, return_names)
   USE.NAMES = return_names)
 }
 
-#' @import foreach doParallel
+#' @import foreach
 parallel_handler <- function(x, object, progress_allowed, pb = NULL, return_names) {
-  registerDoParallel(cores = detectCores())
-  res <- foreach(i = seq_along(x), .inorder = TRUE, .combine = c, .multicombine = TRUE, .export = c("pb", "progress_allowed")) %dopar% {
-    if (progress_allowed) pb$tick()
+  res <- foreach(i = seq_along(x), .inorder = TRUE, .combine = c, .multicombine = TRUE) %dopar% {
     predict_handler(y = x[i], object)
   }
   if (return_names)
