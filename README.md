@@ -41,10 +41,10 @@ predict(month_model, newdata = month_df, return_names = TRUE)
 #>    August September   October  November  December 
 #>     FALSE     FALSE     FALSE     FALSE     FALSE
 
-# You can pass options to `grepl` as well
+# You can pass options to the underlying search function as well
 caseless_month_model <- kwm(include = c("a", "e"), exclude = "r$", 
                             varname = "month", 
-                            grepl_opts = list(ignore.case = TRUE))
+                            search_opts = list(ignore_case = TRUE))
 
 predict(caseless_month_model, newdata = month_df, return_names = TRUE)
 #>   January  February     March     April       May      June      July 
