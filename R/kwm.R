@@ -53,11 +53,11 @@ predict.kwm <- function(object, newdata, progress = interactive(), return_names 
 
   assertthat::assert_that(
     assertthat::has_name(newdata, object$varname),
-    msg = sprintf("%s does not have a column named '%s'.", newdata_name, object$varname))
+    msg = stringr::str_glue("{newdata_name} does not have a column named '{object$varname}'."))
 
   assertthat::assert_that(
     is.character(newdata[[object$varname]]),
-    msg = sprintf("'%s' in %s is not character.", object$varname, newdata_name))
+    msg = stringr::str_glue("'{object$varname}' in {newdata_name} is not character."))
 
   progress_allowed <- progress & requireNamespace("progress", quietly = TRUE)
 
