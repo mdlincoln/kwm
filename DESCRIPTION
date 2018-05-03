@@ -13,11 +13,11 @@ URL: https://github.com/mdlincoln/kwm
 BugReports: https://github.com/mdlincoln/kwm/issues
 Imports:
     assertthat,
+    doParallel,
     stringr
 Suggests:
     progress,
-    testthat,
-    doParallel
+    testthat
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
