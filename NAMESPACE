@@ -2,5 +2,4 @@
 
 S3method(predict,kwm)
 export(kwm)
-import(doParallel)
 import(foreach)

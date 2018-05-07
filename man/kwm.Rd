@@ -29,7 +29,9 @@ kwm(include = character(), exclude = character(), varname,
 \item{progress}{Logical. Display a progress bar?}
 
 \item{return_names}{Logical. Add original text as names to the resulting
-logical vector?}
+logical vector? Defaults to false.}
+
+\item{parallel}{Logical. Compute predictions in parallel? Requires \link{doParallel}.}
 
 \item{...}{Other arguments passed from functions. Not used currently.}
 }

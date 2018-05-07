@@ -41,7 +41,8 @@ kwm <- function(include = character(), exclude = character(), varname, search_fu
 #' @param newdata A data.frame containing a text column
 #' @param progress Logical. Display a progress bar?
 #' @param return_names Logical. Add original text as names to the resulting
-#'   logical vector?
+#'   logical vector? Defaults to false.
+#' @param parallel Logical. Compute predictions in parallel? Requires [doParallel].
 #' @param ... Other arguments passed from functions. Not used currently.
 #'
 #' @return `predict.kwm` reutrns a logical vector.
@@ -90,6 +91,11 @@ single_handler <- function(x, object, progress_allowed, pb = NULL, return_names)
 #' @import foreach
 parallel_handler <- function(x, object, progress_allowed, pb = NULL, return_names) {
   doParallel::registerDoParallel()
+
+  # Bind i so that R CMD CHECK does not throw a warning about an undefined
+  # global variable when it is used in foreach
+  i <- NULL
+
   res <- foreach(i = seq_along(x), .inorder = TRUE, .combine = c, .multicombine = TRUE) %dopar% {
     predict_handler(y = x[i], object)
   }
